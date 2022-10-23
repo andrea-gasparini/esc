@@ -4,3 +4,4 @@ wandb
 nltk==3.4.5
 nlp
 black==21.5b2
+protobuf<=3.20.1

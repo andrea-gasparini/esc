@@ -27,6 +27,9 @@ def chunks(lst, n):
 
 def list_elems_in_dir(dir_path: str, only_files: bool = False, only_dirs: bool = False) -> List[str]:
 
+    if not isdir(dir_path):
+        return list()
+
     elems_in_dir = [e for e in listdir(dir_path)]
 
     if only_files:

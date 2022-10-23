@@ -305,6 +305,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prediction-types", type=str, required=True, nargs="+")
     parser.add_argument("--evaluate", action="store_true", default=False)
     # default + not required
+    parser.add_argument("--cpu", action="store_true", default=False)
     parser.add_argument("--device", type=int, default=0)
     parser.add_argument("--tokens-per-batch", type=int, default=4000)
     parser.add_argument("--output-errors", action="store_true", default=False)
@@ -328,7 +329,9 @@ def main() -> None:
     wsd_model = ESCModule.load_from_checkpoint(args.ckpt)
     wsd_model.freeze()
 
-    if args.device >= 0:
+    if args.cpu:
+        wsd_model.to("cpu")
+    elif args.device >= 0:
         wsd_model.to(torch.device(args.device))
 
     tokenizer = get_tokenizer(
